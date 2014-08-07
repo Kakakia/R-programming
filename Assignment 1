@@ -1,0 +1,38 @@
+data<-read.table("C:/Users/xu8/Desktop/R/exdata_data_household_power_consumption/household_power_consumption.txt", header=TRUE, sep=";")
+
+## subsetting the data to including only 2007-02-01 and 2007-02-02
+data1<-subset(data, data$Date %in% c("1/2/2007","2/2/2007"))
+str(data1)
+head(data1)
+data1$Time1 <- strptime(paste(data1$Date,data1$Time), "%d/%m/%Y %H:%M:%S")
+ds$Date <- strptime(paste(ds$Date,ds$Time), "%d/%m/%Y %H:%M:%S")
+
+# figure 1
+par(mfcol=c(1,1))
+hist(as.numeric(as.character(data1$Global_active_power)), main="Global Active Power", col="red", xlab="Global Active Power (kilowatts)")
+dev.copy(png, "./ActivePower_hist.png")
+dev.off()
+
+# figure 2
+
+plot(data1$Time1, as.numeric(as.character(data1$Global_active_power)), type="l", xlab="", ylab="Global Active Power (kilowatts)")
+dev.copy(png, "./ActivePower.png")
+dev.off()
+
+# figure 3
+plot(data1$Time1,as.numeric(as.character(data1$Sub_metering_1)), type="l", ylab="Energy sub metering", xlab="")
+lines(data1$Time1,as.numeric(as.character(data1$Sub_metering_2)), col="red")
+lines(data1$Time1,data1$Sub_metering_3, col="blue")
+legend("topright",legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black", "red", "blue"), text.col = "black", lty=c(1,1,1))
+
+# figure 4
+par(mfcol=c(2,2))
+plot(data1$Global_active_power_n,type="l", xlab="", ylab="Global Active Power")
+plot(as.numeric(as.character(data1$Voltage)), type="l", xlab="datatime", ylab="Voltage")
+plot(as.numeric(as.character(data1$Sub_metering_1)), type="l", ylab="Energy sub metering", xlab="")
+lines(as.numeric(as.character(data1$Sub_metering_2)), col="red")
+lines(data1$Sub_metering_3, col="blue")
+legend("topright",legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black", "red", "blue"), lty=c(1,1,1))
+plot(as.numeric(as.character(data1$Global_reactive_power)), type="l", ylab="Global_reactive_power", xlab="datetime")
+      
+
